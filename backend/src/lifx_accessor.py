@@ -10,9 +10,9 @@ headers = {
 def start_sunrise():
     # 2000k -> 4500k
     minutes = 1.0
-    set_colour("2500", 0.0, 0.0)
-    #set_colour("4500", 0.5, 10)
-    fade_colour(2000, 0.5, minutes*10)
+    set_colour("1500", 0.0, 0.0)
+    set_colour("4500", 1.0, 10)
+    #fade_colour(2000, 0.5, minutes*10)
     
 
 def set_colour(kelvin, brightness, duration):
