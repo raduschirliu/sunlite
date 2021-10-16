@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
 from twilio.twiml.messaging_response import MessagingResponse
-from lifx_accessor import start_sunrise
+from .lifx_accessor import start_sunrise
 
 load_dotenv()
 
