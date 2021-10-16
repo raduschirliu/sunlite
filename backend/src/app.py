@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
 from twilio.twiml.messaging_response import MessagingResponse
-from .lifx_accessor import test_lamp
+from .lifx_accessor import start_sunrise
 
 load_dotenv()
 
@@ -22,7 +22,7 @@ def sms_receive():
     body = request.form['Body']
 
     # add info to DB
-    test_lamp() #testing
+    start_sunrise() #testing
 
     # send confirmation
     resp = MessagingResponse()
