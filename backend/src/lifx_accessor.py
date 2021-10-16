@@ -7,6 +7,9 @@ headers = {
     "Authorization": "Bearer %s" % token,
 }
 
+def test_lamp():
+    set_colour("4500")
+
 def start_sunrise():
     # 2000k -> 4500k
     set_colour("2000")
@@ -17,11 +20,14 @@ def set_colour(kelvin):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
-        "brightness": 0,
+        "brightness": 1.0,
         "duration": 0
     }
 
     response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
+
+    print(response)
+
 
 def fade_colour(delta_kelvin, delta_brightness, duration):
     payload = { 
