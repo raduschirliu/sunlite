@@ -27,7 +27,7 @@ def set_colour(kelvin, brightness, duration):
 
     print(response)
 
-def set_colour(kelvin):
+def set_colour_off(kelvin):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
