@@ -1,4 +1,5 @@
 import requests
+import os
 
 token = os.getenv('LIFX_KEY')
 
