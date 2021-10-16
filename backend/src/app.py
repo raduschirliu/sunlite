@@ -4,9 +4,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
 from twilio.twiml.messaging_response import MessagingResponse
+
 from .lifx_accessor import start_sunrise
 
 load_dotenv()
+
+from .util import db
+db.create_event_table()
 
 port = int(os.getenv('PORT', 8000))
 app = Flask(__name__)
@@ -30,8 +34,23 @@ def sms_receive():
 
     return str(resp)
 
+@app.route("/")
+def index():
+    return "Hello World!"
+
+
+@app.route("/tests")
+def get_tests():
+    sql = "SELECT * FROM test"
+    db.cursor.execute(sql)
+
+    rows = db.cursor.fetchall()
+
+    text = ""
+    for row in rows:
+        text += str(row)
+
+    return text
 
 if __name__ == '__main__':
     app.run(port=port, threaded=True)
-
-
