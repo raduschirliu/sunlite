@@ -28,6 +28,8 @@ def sms_receive():
     resp = MessagingResponse()
     resp.message("hello " + from_number)
 
+    return str(resp)
+
 
 if __name__ == '__main__':
     app.run(port=port, threaded=True)
