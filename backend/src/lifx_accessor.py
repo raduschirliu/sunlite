@@ -9,12 +9,24 @@ headers = {
 
 def start_sunrise():
     # 2000k -> 4500k
-    minutes = 1
-    set_colour("2500")
-    fade_colour(2000, 0.5, minutes*60)
+    minutes = 10
+    set_colour("1500", 0.0, 0.0)
+    set_colour("4500", 1.0, minutes*60.0)
     
 
-def set_colour(kelvin):
+def set_colour(kelvin, brightness, duration):
+    payload = { 
+        "power": "on",
+        "color": "kelvin:" + kelvin + " saturation:1",
+        "brightness": brightness,
+        "duration": duration
+    }
+
+    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
+
+    print(response)
+
+def set_colour_off(kelvin):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
@@ -35,6 +47,6 @@ def fade_colour(delta_kelvin, delta_brightness, duration):
         "brightness": delta_brightness   
     }
 
-    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
+    response = requests.post('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
 
     print(response)
