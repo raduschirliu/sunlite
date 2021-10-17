@@ -55,7 +55,8 @@ def sms_receive():
             if  scheduled_today < now:
                 scheduled_at = scheduled_today
             else:
-                scheduled_at = datetime.datetime.combine(now.timedelta(days=1), time_from_body)
+                tomorrow = datetime.date.today() + datetime.date.timedelta(days=1)
+                scheduled_at = datetime.datetime.combine(tomorrow, time_from_body)
 
             db.post_event(scheduled_at, api_key)
 
