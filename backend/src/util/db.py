@@ -30,7 +30,7 @@ def update_user_details(id, api_key, phone_number):
 
     try:
         cursor.execute(sql, (id, api_key, phone_number))
-        cursor.commit()
+        conn.commit()
     except Exception as e:
         print(e)
 
