@@ -1,4 +1,6 @@
 import os
+import datetime
+import psycopg2
 import json
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
@@ -50,18 +52,42 @@ def sms_receive():
 def index():
     return "Hello World!"
 
+@app.route("/insert")
+def insert_test():
+    timestamp = "1999-01-08 04:05:06"
+
+    db.post_event("on", "kelvin:500 saturation:1", 0.75, 5, datetime(timestamp), 1, 1)
+
+    return "hello"
+
 @app.route("/tests")
 def get_tests():
     sql = "SELECT * FROM test"
     db.cursor.execute(sql)
 
-    rows = db.cursor.fetchall()
+    return "Inserted!"
 
-    text = ""
-    for row in rows:
-        text += str(row)
+@app.route("/test/insert")
+def test_insert():
+    print("wtf?")
+    try:
+        DATABASE_URL = os.getenv("DATABASE_URL")
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
-    return text
+        cursor = conn.cursor()
+
+        sql = """INSERT INTO test ("Name") VALUES (%s);"""
+        val = ('Hi Jordan!',)
+        cursor.execute(sql, val)
+        conn.commit()
+
+        # commit the changes
+        conn.close()
+        print("did the thing")
+        return "worked"
+    except (Exception, psycopg2.DatabaseError) as error:
+        return str(error)
+        print(error)
 
 # Update user account information
 @app.route('/account', methods=['POST'])

@@ -36,6 +36,10 @@ def update_user_details(id, api_key, phone_number):
         print(e)
 
 def create_event_table():
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+    cursor = conn.cursor()
+
     sql = """ CREATE TABLE IF NOT EXISTS public."Event" (
     power character varying(10) NOT NULL,
     color character varying(100) NOT NULL,
@@ -54,15 +58,28 @@ def create_event_table():
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 
+    finally:
+        conn.close()
+
 # returns an array of the events from the DB!
 def get_events():
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+    cursor = conn.cursor()
+
     sql = "SELECT * FROM public.Event"
     cursor.execute(sql)
+
+    conn.close()
 
     return cursor.fetchall()
 
 def post_event(power, color, brightness, duration, scheduled_at, id, user_id):
     try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+        cursor = conn.cursor()
+
         cursor.execute(""" 
         INSERT INTO public."Event" (
         power,
@@ -79,8 +96,15 @@ def post_event(power, color, brightness, duration, scheduled_at, id, user_id):
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 
+    finally:
+        conn.close()
+
 def delete_events(id):
     try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+        cursor = conn.cursor()
+
         cursor.execute("""
         DELETE FROM public.Event
         WHERE id = ?
@@ -90,3 +114,6 @@ def delete_events(id):
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
+
+    finally:
+        conn.close()
