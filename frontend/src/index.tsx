@@ -3,18 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
-// import history from './history';
 import './index.css';
 
-const AUTH0_DOMAIN = 'dev-4nutzf54.us.auth0.com';
-const AUTH0_CLIENT_ID = 'FMdMIzOua71jIMXH5QPcZGpmVEceRhKV';
-const AUTH0_AUDIENCE = 'https://mmpp-mhacks-lamp.herokuapp.com/';
-// const AUTH0_REDIRECT_URL = 'http://localhost:3000/account';
-
-// const onRedirectCallback = (appState: any) => {
-//   // Use the router's history module to replace the url
-//   history.replace(appState?.returnTo || window.location.pathname);
-// };
+const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN || '';
+const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID || '';
+const AUTH0_AUDIENCE = process.env.REACT_APP_AUTH0_AUDIENCE || '';
 
 ReactDOM.render(
   <React.StrictMode>
