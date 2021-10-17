@@ -46,16 +46,16 @@ def sms_receive():
             scheduled_at = None
 
             # convert the body to a datetime
-            time_from_body = datetime.strptime(body, "%H:%M")
+            time_from_body = datetime.datetime.strptime(body, "%H:%M")
 
             now = datetime.date.today()
-            scheduled_today = datetime.combine(now, time_from_body)
+            scheduled_today = datetime.datetime.combine(now, time_from_body)
 
             # if date.now is greater than the provided time, then increment to tomorrow
             if  scheduled_today < now:
                 scheduled_at = scheduled_today
             else:
-                scheduled_at = datetime.combine(now.timedelta(days=1), time_from_body)
+                scheduled_at = datetime.datetime.combine(now.timedelta(days=1), time_from_body)
 
             db.post_event(scheduled_at, api_key)
 
@@ -69,35 +69,7 @@ def sms_receive():
 
 @app.route("/")
 def index():
-    return "Hello World!"
-
-@app.route("/tests")
-def get_tests():
-    sql = "SELECT * FROM test"
-    db.cursor.execute(sql)
-
-    return "Inserted!"
-
-@app.route("/test/insert")
-def test_insert():
-    print("wtf?")
-    try:
-        DATABASE_URL = os.getenv("DATABASE_URL")
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
-        cursor = conn.cursor()
-
-        sql = """INSERT INTO test ("Name") VALUES (%s);"""
-        val = ('Hi Jordan!',)
-        cursor.execute(sql, val)
-        conn.commit()
-
-        # commit the changes
-        conn.close()
-        print("did the thing")
-        return "worked"
-    except (Exception, psycopg2.DatabaseError) as error:
-        return str(error)
+    return "Hello Jordan!"
 
 # Update user account information
 @app.route('/account', methods=['POST'])
