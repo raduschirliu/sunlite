@@ -15,11 +15,10 @@ def start_sunrise():
     
 def disco():
     for i in range(10):
-        set_colour("1000", 0.0, 2.0)
-        set_colour("2000", 0.0, 2.0)
-        set_colour("3000", 0.0, 2.0)
-        set_colour("4000", 0.0, 2.0)
-        set_colour("5000", 0.0, 2.0)
+        set_colour("2000", 1.0, 0.1)
+        set_colour("3000", 1.0, 0.1)
+        set_colour("4000", 1.0, 0.1)
+        set_colour("5000", 1.0, 0.1)
 
 
 def set_colour(kelvin, brightness, duration):
