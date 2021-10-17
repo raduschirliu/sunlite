@@ -42,6 +42,8 @@ def update_user_details(id, api_key, phone_number):
         print(e)
 
 def get_user_api_key(phone_number):
+    print("get_user_api_key(), params => phone number:", phone_number)
+
     DATABASE_URL = os.getenv("DATABASE_URL")
 
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -51,7 +53,7 @@ def get_user_api_key(phone_number):
     SELECT api_key FROM public."Users"
     WHERE phone_number = %s
     """
-    val = (phone_number)
+    val = (phone_number,)
     
     try:
         cursor.execute(sql, val)
