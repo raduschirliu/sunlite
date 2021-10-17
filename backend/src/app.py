@@ -3,22 +3,26 @@ import json
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-
 from twilio.twiml.messaging_response import MessagingResponse
 
 from .lifx_accessor import start_sunrise, disco
 from .auth import verify_jwt
 
+# Load dotenv files
 load_dotenv()
 
+# Init DB tables
 from .util import db
 db.create_event_table()
+db.create_users_table()
 
+# Init Flask
 port = int(os.getenv('PORT', 8000))
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app)
 
+# Webhook callback from Twilio
 @app.route("/sms", methods=['POST'])
 @cross_origin()
 def sms_receive():
@@ -27,7 +31,7 @@ def sms_receive():
     to_number = request.form['To']
     body = request.form['Body']
 
-    if(body == "disco"): 
+    if body == "disco": 
         disco()
         response = "DISCO ON!"
     else: 
@@ -59,24 +63,30 @@ def get_tests():
 
     return text
 
+# Update user account information
 @app.route('/account', methods=['POST'])
 @cross_origin()
 def update_account():
     jwt = verify_jwt()
 
     if jwt == False:
-        return "oeh noe :("
+        return "Unauthorized", 401
 
     print(jwt)
     data = request.json
 
     if "api_key" not in data or "phone_number" not in data:
-        return "invalid data"
+        return "Invalid request", 400
 
     id = jwt["sub"]
     db.update_user_details(id, data["api_key"], data["phone_number"])
 
-    return "Ok"
+    return {
+        "id": id,
+        "api_key": data["api_key"],
+        "phone_number": data["phone_number"]
+    }
 
+# Run Flask app
 if __name__ == '__main__':
     app.run(port=port, threaded=True)
