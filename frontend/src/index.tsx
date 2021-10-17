@@ -9,7 +9,7 @@ import './index.css';
 const AUTH0_DOMAIN = 'dev-4nutzf54.us.auth0.com';
 const AUTH0_CLIENT_ID = 'FMdMIzOua71jIMXH5QPcZGpmVEceRhKV';
 const AUTH0_AUDIENCE = 'https://mmpp-mhacks-lamp.herokuapp.com/';
-const AUTH0_REDIRECT_URL = 'http://localhost:3000/account';
+// const AUTH0_REDIRECT_URL = 'http://localhost:3000/account';
 
 // const onRedirectCallback = (appState: any) => {
 //   // Use the router's history module to replace the url
