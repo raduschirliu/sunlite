@@ -46,7 +46,7 @@ def sms_receive():
             scheduled_at = None
 
             # convert the body to a datetime
-            time_from_body = datetime.datetime.strptime(body, "%H:%M")
+            time_from_body = datetime.datetime.strptime(body, "%H:%M").time()
 
             now = datetime.date.today()
             scheduled_today = datetime.datetime.combine(now, time_from_body)
