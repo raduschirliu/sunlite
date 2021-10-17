@@ -63,7 +63,8 @@ def update_account():
 
     print(jwt)
     data = request.json
-    print(json)
+    print(data)
+    return "Ok"
     # db.update_user_details(id, api_key, phone_number)
 
 if __name__ == '__main__':
