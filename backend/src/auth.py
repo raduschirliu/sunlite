@@ -7,11 +7,11 @@ JWT_AUDIENCE = os.getenv('JWT_AUDIENCE')
 
 # Check if the request header includes a valid JWT
 def verify_jwt():
-    if not hasattr(request.headers, 'Authorization'):
+    authorization = request.headers.get('Authorization')
+
+    if not authorization:
         print('No authorization')
         return False
-
-    authorization = request.headers.get('Authorization')
     parts = authorization.split(' ')
     
     if len(parts) != 2:
