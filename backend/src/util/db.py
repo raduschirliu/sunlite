@@ -25,11 +25,13 @@ def create_users_table():
 def update_user_details(id, api_key, phone_number):
     sql = """
         INSERT INTO "Users" (id, api_key, phone_number)
-        VALUES (%s, %s, %s);
+            VALUES (%s, %s, %s)
+        ON CONFLICT (id)
+            DO UPDATE SET api_key = %s, phone_number = %s;
     """
 
     try:
-        cursor.execute(sql, (id, api_key, phone_number))
+        cursor.execute(sql, (id, api_key, phone_number, api_key, phone_number))
         conn.commit()
     except Exception as e:
         print(e)
