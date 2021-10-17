@@ -57,7 +57,7 @@ def get_user_api_key(phone_number):
     
     try:
         cursor.execute(sql, val)
-        result = cursor.fetchone()
+        return cursor.fetchone()
 
     except Exception as e:
         print(e)
