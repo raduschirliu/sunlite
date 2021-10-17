@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 
 from twilio.twiml.messaging_response import MessagingResponse
 
-from .lifx_accessor import start_sunrise
+from .lifx_accessor import start_sunrise, disco
 from .auth import verify_jwt
 
 load_dotenv()
@@ -26,6 +26,8 @@ def sms_receive():
     from_number = request.form['From']
     to_number = request.form['To']
     body = request.form['Body']
+
+    if(body == "disco"): disco()
 
     # add info to DB
     start_sunrise() #testing
