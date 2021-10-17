@@ -61,8 +61,9 @@ def update_account():
     if jwt == False:
         return "oeh noe :("
 
-    data = json.loads(jwt)
-    print(data)
+    print(jwt)
+    data = request.json
+    print(json)
     # db.update_user_details(id, api_key, phone_number)
 
 if __name__ == '__main__':
