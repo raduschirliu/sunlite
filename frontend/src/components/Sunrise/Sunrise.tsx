@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './Sunrise.css';
 
 const Sunrise = () => {
-  const [sunriseTime, setSunriseTime] = useState('');
+  const [, setSunriseTime] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const hasSunrise = false;
 

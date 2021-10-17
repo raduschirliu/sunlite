@@ -1,5 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
 import Nav from '../../components/Nav/Nav';
 import Settings from '../../components/Settings/Settings';
 import Sunrise from '../../components/Sunrise/Sunrise';
