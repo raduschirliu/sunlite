@@ -69,9 +69,14 @@ def update_account():
 
     print(jwt)
     data = request.json
-    print(data)
+
+    if "api_key" not in data or "phone_number" not in data:
+        return "invalid data"
+
+    id = jwt["sub"]
+    db.update_user_details(id, data["api_key"], data["phone_number"])
+
     return "Ok"
-    # db.update_user_details(id, api_key, phone_number)
 
 if __name__ == '__main__':
     app.run(port=port, threaded=True)
