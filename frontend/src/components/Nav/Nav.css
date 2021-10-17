@@ -1,0 +1,24 @@
+.nav-container {
+  display: flex;
+  background-color: #fff0c7;
+  padding: 10px 10px;
+}
+
+.nav-welcome {
+  margin-left: 20px;
+  flex: 1;
+  align-self: center;
+}
+
+.nav-welcome-name {
+  font-weight: 625;
+}
+
+.nav-logout {
+  cursor: pointer;
+  align-self: center;
+}
+
+.nav-logout:hover {
+  opacity: 0.8;
+}

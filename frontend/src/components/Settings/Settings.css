@@ -1,0 +1,24 @@
+.settings-container {
+  background-color: #fff0c7;
+  border-radius: 10px;
+  margin: 50px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-title-container {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  color: #7597C5;
+}
+
+.settings-title {
+  text-align: center;
+  color: #7597C5;
+}
+
+.settings-container > div {
+  margin-bottom: 20px;
+}

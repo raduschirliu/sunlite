@@ -10,12 +10,14 @@ const GuardedRoute = ({ component, ...rest }: any) => {
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <GuardedRoute path="/account" component={Account} />
-        <Route path="/" component={Home} exact />
-      </Switch>
-    </Router>
+    <div className="app-container">
+      <Router>
+        <Switch>
+          <GuardedRoute path="/account" component={Account} />
+          <Route path="/" component={Home} exact />
+        </Switch>
+      </Router>
+    </div>
   );
 };
 
