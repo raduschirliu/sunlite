@@ -37,10 +37,29 @@ def sms_receive():
         disco()
         response = "DISCO ON!"
     else: 
-        # check if phone number is registered
-        # update database
-        response = "Sunrise scheduled :)"
-        start_sunrise() #testing
+        # Get the api_key associated with the from_number
+        api_key = db.get_user_api_key(from_number)
+
+        if api_key is None:
+            response = "We could not find a user associated with your phone number. Please sign up at sun-lite.netlify.com."
+        else:
+            scheduled_at = None
+
+            # convert the body to a datetime
+            time_from_body = datetime.strptime(body, "%H:%M")
+
+            now = datetime.date.today()
+            scheduled_today = datetime.combine(now, time_from_body)
+
+            # if date.now is greater than the provided time, then increment to tomorrow
+            if  scheduled_today < now:
+                scheduled_at = scheduled_today
+            else:
+                scheduled_at = datetime.combine(now.timedelta(days=1), time_from_body)
+
+            db.post_event(scheduled_at, api_key)
+
+            response = "Sunrise scheduled :)"
 
     # send confirmation
     resp = MessagingResponse()
@@ -51,9 +70,6 @@ def sms_receive():
 @app.route("/")
 def index():
     return "Hello World!"
-
-def insert_event():
-    db.post_event(time, )
 
 @app.route("/tests")
 def get_tests():

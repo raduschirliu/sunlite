@@ -41,6 +41,25 @@ def update_user_details(id, api_key, phone_number):
     except Exception as e:
         print(e)
 
+def get_user_api_key(phone_number):
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
+
+    sql = """
+    SELECT api_key FROM public."Users"
+    WHERE phone_number = %s
+    """
+    val = (phone_number)
+    
+    try:
+        cursor.execute(sql, val)
+        result = cursor.fetchone()
+
+    except Exception as e:
+        print(e)
+
 def create_event_table():
     DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -69,7 +88,7 @@ def get_events():
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
 
-    sql = "SELECT * FROM public.Event"
+    sql = """SELECT * FROM public.'Event'"""
     cursor.execute(sql)
 
     conn.close()
