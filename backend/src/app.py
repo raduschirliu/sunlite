@@ -1,7 +1,5 @@
 import os
 import datetime
-import psycopg2
-import json
 from dotenv import load_dotenv
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
@@ -12,12 +10,12 @@ from .auth import verify_jwt
 # Load dotenv files
 load_dotenv()
 
-# Init DB tables
+# Initialize DB tables
 from .util import db
 db.create_event_table()
 db.create_users_table()
 
-# Init Flask
+# Initialize Flask
 port = int(os.getenv('PORT', 8000))
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -32,10 +30,7 @@ def sms_receive():
     to_number = request.form['To']
     body = request.form['Body']
 
-    if body == "disco": 
-        #disco()
-        response = "DISCO ON!"
-    else: 
+    try:
         # Get the api_key associated with the from_number
         api_key = db.get_user_api_key(from_number)
 
@@ -54,22 +49,25 @@ def sms_receive():
             if  scheduled_today < now:
                 scheduled_at = scheduled_today
             else:
-                tomorrow = datetime.date.today() - datetime.timedelta(days=2)
+                tomorrow = datetime.date.today() + datetime.timedelta(days=1)
                 scheduled_at = datetime.datetime.combine(tomorrow, time_from_body)
 
             db.post_event(scheduled_at, api_key)
 
             response = "Sunrise scheduled :)"
+    except (Exception):
+        response = "Unknown command, usage: <HH:MM>"
 
-    # send confirmation
-    resp = MessagingResponse()
-    resp.message(response)
+    finally:
+        # send confirmation
+        resp = MessagingResponse()
+        resp.message(response)
 
-    return str(resp)
+        return str(resp)
 
 @app.route("/")
 def index():
-    return "Hello Jordan!"
+    return "MMPP MHacks-14 Heroku App is running!"
 
 # Update user account information
 @app.route('/account', methods=['POST'])

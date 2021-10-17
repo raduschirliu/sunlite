@@ -129,9 +129,9 @@ def delete_events(id):
         cursor = conn.cursor()
 
         cursor.execute("""
-        DELETE FROM public.Event
-        WHERE id = %s
-        """, (id))
+        DELETE FROM public."Event"
+        WHERE id = %s;
+        """, (id,))
 
         # commit the changes
         conn.commit()

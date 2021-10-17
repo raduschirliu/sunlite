@@ -1,5 +1,4 @@
 from dotenv import load_dotenv
-
 from lifx_accessor import start_sunrise
 
 # Load dotenv files
