@@ -1,5 +1,5 @@
 import os
-import datetime
+from datetime import datetime
 import psycopg2
 import json
 from dotenv import load_dotenv
@@ -48,13 +48,8 @@ def sms_receive():
 def index():
     return "Hello World!"
 
-@app.route("/insert")
-def insert_test():
-    timestamp = "1999-01-08 04:05:06"
-
-    db.post_event("on", "kelvin:500 saturation:1", 0.75, 5, datetime(timestamp), 1, 1)
-
-    return "hello"
+def insert_event():
+    db.post_event(time, )
 
 @app.route("/tests")
 def get_tests():
@@ -83,7 +78,6 @@ def test_insert():
         return "worked"
     except (Exception, psycopg2.DatabaseError) as error:
         return str(error)
-        print(error)
 
 @app.route('/account', methods=['POST'])
 @cross_origin()

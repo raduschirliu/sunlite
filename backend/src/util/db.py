@@ -1,9 +1,13 @@
+from datetime import datetime
 import os
 import psycopg2
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
 def create_users_table():
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
+
     sql = """
         CREATE TABLE IF NOT EXISTS "Users" (
             id varchar(255) NOT NULL PRIMARY KEY,
@@ -19,6 +23,11 @@ def create_users_table():
         print(error)
 
 def update_user_details(id, api_key, phone_number):
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
+
     sql = """
         INSERT INTO "Users" (id, api_key, phone_number)
             VALUES (%s, %s, %s)
@@ -33,18 +42,15 @@ def update_user_details(id, api_key, phone_number):
         print(e)
 
 def create_event_table():
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    DATABASE_URL = os.getenv("DATABASE_URL")
 
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
 
     sql = """ CREATE TABLE IF NOT EXISTS public."Event" (
-    power character varying(10) NOT NULL,
-    color character varying(100) NOT NULL,
-    brightness double precision NOT NULL,
-    duration double precision NOT NULL,
+    id SERIAL NOT NULL PRIMARY KEY,
     scheduled_at timestamp without time zone NOT NULL,
-    id integer NOT NULL,
-    user_id integer NOT NULL
+    api_token character varying(250) NOT NULL
     ) """
     
     try:
@@ -52,16 +58,15 @@ def create_event_table():
         
         # commit the changes
         conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    finally:
         conn.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        return str(error)
 
 # returns an array of the events from the DB!
 def get_events():
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    DATABASE_URL = os.getenv("DATABASE_URL")
 
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
 
     sql = "SELECT * FROM public.Event"
@@ -71,46 +76,40 @@ def get_events():
 
     return cursor.fetchall()
 
-def post_event(power, color, brightness, duration, scheduled_at, id, user_id):
+def post_event(scheduled_at, api_key):
     try:
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        DATABASE_URL = os.getenv("DATABASE_URL")
 
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cursor = conn.cursor()
 
         cursor.execute(""" 
         INSERT INTO public."Event" (
-        power,
-        color,
-        brightness,
-        duration,
         scheduled_at,
-        id,
-        user_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)""", (power, color, brightness, duration, scheduled_at, id, user_id))
+        api_key
+        ) VALUES (%s, %s)""", (scheduled_at, api_key))
 
         # commit the changes
         conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    finally:
         conn.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        return str(error)
 
-def delete_events(id):
+
+def delete_events(time: datetime):
     try:
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        DATABASE_URL = os.getenv("DATABASE_URL")
 
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cursor = conn.cursor()
 
         cursor.execute("""
         DELETE FROM public.Event
-        WHERE id = ?
-        """, (id))
+        WHERE scheduled_at < %s
+        """, (time))
 
         # commit the changes
         conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    finally:
         conn.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        return str(error)
