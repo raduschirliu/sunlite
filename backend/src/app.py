@@ -49,7 +49,7 @@ def sms_receive():
             time_from_body = datetime.datetime.strptime(body, "%H:%M").time()
 
             now = datetime.datetime.today()
-            scheduled_today = datetime.datetime.combine(now, time_from_body)
+            scheduled_today = datetime.datetime.combine(now.date(), time_from_body)
 
             # if date.now is greater than the provided time, then increment to tomorrow
             if  scheduled_today < now:
