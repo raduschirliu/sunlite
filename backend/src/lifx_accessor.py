@@ -6,7 +6,7 @@ def start_sunrise(api_token):
     }
 
     # 2000k -> 4500k
-    minutes = 3
+    minutes = 30
     set_colour("1500", 0.0, 0.0, headers)
     set_colour("4500", 0.6, minutes*60.0, headers)
     
