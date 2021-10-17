@@ -12,11 +12,17 @@ if __name__ == "__main__":
     rows = db.get_events_api_key()
 
     if len(rows) > 0:
-        event = rows.pop()
-        # event = (id, api_key) 
+        (id, api_key) = rows.pop()
 
-        db.delete_events(event[0])
-        start_sunrise(event[1])    
+        print("Event with id:", id, "and api_key:", api_key)
+
+        db.delete_events(id)
+
+        print("Deleted stored event!")
+
+        start_sunrise(api_key)  
+
+        print("Finished executing the scheduler!")  
     else:
         print("No events to execute!")
 

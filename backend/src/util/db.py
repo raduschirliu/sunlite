@@ -121,7 +121,7 @@ def post_event(scheduled_at, api_key):
         return str(error)
 
 
-def delete_events(time: datetime):
+def delete_events(id):
     try:
         DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -130,8 +130,8 @@ def delete_events(time: datetime):
 
         cursor.execute("""
         DELETE FROM public.Event
-        WHERE scheduled_at < %s
-        """, (time))
+        WHERE id = %s
+        """, (id))
 
         # commit the changes
         conn.commit()

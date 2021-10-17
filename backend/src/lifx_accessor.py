@@ -10,15 +10,16 @@ def start_sunrise(api_token):
     set_colour("1500", 0.0, 0.0, headers)
     set_colour("4500", 0.6, minutes*60.0, headers)
     
+'''
 def disco():
     for i in range(10):
         set_colour("2000", 1.0, 0.03)
         set_colour("3000", 1.0, 0.03)
         set_colour("4000", 1.0, 0.03)
         set_colour("5000", 1.0, 0.03)
+'''
 
-
-def set_colour(kelvin, brightness, duration, headers):
+def set_colour(kelvin, brightness, duration, header):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
@@ -26,11 +27,11 @@ def set_colour(kelvin, brightness, duration, headers):
         "duration": duration
     }
 
-    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
+    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=header)
 
     print(response)
 
-def set_colour_off(kelvin, headers):
+def set_colour_off(kelvin, header):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
@@ -38,12 +39,12 @@ def set_colour_off(kelvin, headers):
         "duration": 0
     }
 
-    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
+    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=header)
 
     print(response)
 
 
-def fade_colour(delta_kelvin, delta_brightness, duration, headers):
+def fade_colour(delta_kelvin, delta_brightness, duration, header):
     payload = { 
         "power": "on",
         "duration": duration,
@@ -51,6 +52,6 @@ def fade_colour(delta_kelvin, delta_brightness, duration, headers):
         "brightness": delta_brightness   
     }
 
-    response = requests.post('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
+    response = requests.post('https://api.lifx.com/v1/lights/all/state', data=payload, headers=header)
 
     print(response)
