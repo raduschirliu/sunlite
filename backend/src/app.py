@@ -27,12 +27,18 @@ def sms_receive():
     to_number = request.form['To']
     body = request.form['Body']
 
-    if(body == "disco"): disco()
-    else: start_sunrise() #testing
+    if(body == "disco"): 
+        disco()
+        response = "DISCO ON!"
+    else: 
+        # check if phone number is registered
+        # update database
+        response = "Sunrise scheduled :)"
+        start_sunrise() #testing
 
     # send confirmation
     resp = MessagingResponse()
-    resp.message("hello " + from_number)
+    resp.message(response)
 
     return str(resp)
 
