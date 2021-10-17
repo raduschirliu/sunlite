@@ -35,3 +35,22 @@
 .home-account:hover {
   opacity: 0.9;
 }
+
+.home-story {
+  background-color: #FFCCA5;
+}
+
+.home-story-title {
+  font-weight: 600;
+  font-size: 45px;
+  text-align: center;
+  padding-top: 125px;
+  margin: 0;
+}
+
+.home-story-desc {
+  width: 65%;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 60px;
+}

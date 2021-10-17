@@ -4,11 +4,20 @@ import { useState } from 'react';
 import './Sunrise.css';
 
 const Sunrise = () => {
-  const [, setSunriseTime] = useState('');
+  const [sunriseTime, setSunriseTime] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const hasSunrise = false;
+  const [digits, setDigits] = useState<string[]>([]);
 
   const setSunrise = () => {
+    if (sunriseTime.length === 5) {
+      setDigits([
+        sunriseTime.charAt(0),
+        sunriseTime.charAt(1),
+        sunriseTime.charAt(3),
+        sunriseTime.charAt(4),
+      ]);
+    }
+
     setSnackbarOpen(true);
   };
 
@@ -19,14 +28,23 @@ const Sunrise = () => {
         <p className="sunrise-title">My Sunrise</p>
       </div>
       <div className="sunrise-time">
-        {hasSunrise ? (
-          <div className="sunrise-time-digits">
-            <p className="sunrise-time-digit">0</p>
-            <p className="sunrise-time-digit">8</p>
-            <p className="sunrise-time-separator">:</p>
-            <p className="sunrise-time-digit">2</p>
-            <p className="sunrise-time-digit">3</p>
-          </div>
+        {digits?.length === 4 ? (
+          <>
+            <div className="sunrise-time-digits">
+              <p className="sunrise-time-digit">{digits[0]}</p>
+              <p className="sunrise-time-digit">{digits[1]}</p>
+              <p className="sunrise-time-separator">:</p>
+              <p className="sunrise-time-digit">{digits[2]}</p>
+              <p className="sunrise-time-digit">{digits[3]}</p>
+            </div>
+            <Button
+              className="sunrise-time-clear"
+              variant="outlined"
+              onClick={() => setDigits([])}
+            >
+              Clear
+            </Button>
+          </>
         ) : (
           <div className="sunrise-unset">
             <p>Text +1 (825) 801-5267 to set your sunrise, or set one below</p>
