@@ -7,7 +7,6 @@ from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from twilio.twiml.messaging_response import MessagingResponse
 
-from .lifx_accessor import disco
 from .auth import verify_jwt
 
 # Load dotenv files
@@ -34,7 +33,7 @@ def sms_receive():
     body = request.form['Body']
 
     if body == "disco": 
-        disco()
+        #disco()
         response = "DISCO ON!"
     else: 
         # Get the api_key associated with the from_number
