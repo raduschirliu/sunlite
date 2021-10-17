@@ -28,9 +28,7 @@ def sms_receive():
     body = request.form['Body']
 
     if(body == "disco"): disco()
-
-    # add info to DB
-    start_sunrise() #testing
+    else: start_sunrise() #testing
 
     # send confirmation
     resp = MessagingResponse()

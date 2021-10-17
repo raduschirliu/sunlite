@@ -13,6 +13,14 @@ def start_sunrise():
     set_colour("1500", 0.0, 0.0)
     set_colour("4500", 0.6, minutes*60.0)
     
+def disco():
+    for i in range(10):
+        set_colour("1000", 0.0, 2.0)
+        set_colour("2000", 0.0, 2.0)
+        set_colour("3000", 0.0, 2.0)
+        set_colour("4000", 0.0, 2.0)
+        set_colour("5000", 0.0, 2.0)
+
 
 def set_colour(kelvin, brightness, duration):
     payload = { 
@@ -48,32 +56,5 @@ def fade_colour(delta_kelvin, delta_brightness, duration):
     }
 
     response = requests.post('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
-
-    print(response)
-
-def disco():
-    payload = {
-        "states": [
-            {
-            "color": "kelvin:2000saturation:1"
-            },
-            {
-            "color": "kelvin:3000saturation:1"
-            },
-            {
-            "color": "kelvin:4000saturation:1"
-            },
-            {
-            "color": "kelvin:5000saturation:1"
-            }
-        ],
-        "defaults": {
-            "power": "on",
-            "saturation": 0,
-            "duration": 2.0 
-        }
-    }
-
-    response = requests.post('https://api.lifx.com/v1beta1/lights/all/cycle', data=payload, headers=headers)
 
     print(response)
