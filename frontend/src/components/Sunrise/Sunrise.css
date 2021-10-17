@@ -1,0 +1,60 @@
+.sunrise-container {
+  background-color: #fff0c7;
+  border-radius: 10px;
+  margin: 50px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sunrise-title-container {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  color: #7597C5;
+}
+
+.sunrise-title {
+  text-align: center;
+  color: #7597C5;
+}
+
+.sunrise-unset {
+  font-size: 17px;
+  height: 100%;
+  text-align: center;
+}
+
+.sunrise-set-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.sunrise-set-container > div {
+  margin-bottom: 20px;
+}
+
+.sunrise-time {
+  display: flex;
+  margin: 0 auto;
+  font-size: 60px;
+}
+
+.sunrise-time-digits {
+  display: flex;
+}
+
+.sunrise-time-digit {
+  background-color: #FFCCA5;
+  color: #FFF0C7;
+  border-radius: 10px;
+  font-weight: 500;
+  margin: auto 2px;
+  padding: 0 7px;
+}
+
+.sunrise-time-separator {
+  color: #7597C5;
+  font-weight: 500;
+}

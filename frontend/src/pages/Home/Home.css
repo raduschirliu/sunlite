@@ -1,0 +1,17 @@
+.home-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-logo {
+    width: 500px;
+    margin: auto;
+}
+
+.home-sun {
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
