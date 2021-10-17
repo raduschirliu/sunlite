@@ -18,3 +18,7 @@
   cursor: pointer;
   align-self: center;
 }
+
+.nav-logout:hover {
+  opacity: 0.8;
+}

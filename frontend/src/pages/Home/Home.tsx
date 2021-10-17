@@ -9,7 +9,11 @@ const Home = () => {
       <img className="home-logo" src={logo} alt="Logo" />
       {/* <img src={sun} alt="Sun" /> */}
       <div style={{ backgroundImage: `url(${sun})` }} className="home-sun">
-        <Link to="/account" className="home-account">Account</Link>
+        <div className="home-account-container">
+          <Link to="/account" className="home-account">
+            Sign Up or Login
+          </Link>
+        </div>
       </div>
     </div>
   );
