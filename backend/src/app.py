@@ -67,8 +67,9 @@ def update_account():
     if "api_key" not in data or "phone_number" not in data:
         return "invalid data"
 
+    id = jwt["sub"]
     db.update_user_details(id, data["api_key"], data["phone_number"])
-    
+
     return "Ok"
 
 if __name__ == '__main__':
