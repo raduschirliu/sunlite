@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
@@ -6,6 +7,7 @@ from flask_cors import CORS, cross_origin
 from twilio.twiml.messaging_response import MessagingResponse
 
 from .lifx_accessor import start_sunrise
+from .auth import verify_jwt
 
 load_dotenv()
 
@@ -38,7 +40,6 @@ def sms_receive():
 def index():
     return "Hello World!"
 
-
 @app.route("/tests")
 def get_tests():
     sql = "SELECT * FROM test"
@@ -51,6 +52,18 @@ def get_tests():
         text += str(row)
 
     return text
+
+@app.route('/account', methods=['POST'])
+@cross_origin()
+def update_account():
+    jwt = verify_jwt()
+
+    if jwt == False:
+        return "oeh noe :("
+
+    data = json.loads(jwt)
+    print(data)
+    # db.update_user_details(id, api_key, phone_number)
 
 if __name__ == '__main__':
     app.run(port=port, threaded=True)

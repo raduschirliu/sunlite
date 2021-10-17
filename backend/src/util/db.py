@@ -7,6 +7,33 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 cursor = conn.cursor()
 
+def create_users_table():
+    sql = """
+        CREATE TABLE IF NOT EXISTS "Users" (
+            id varchar(255) NOT NULL PRIMARY KEY,
+            phone_number varchar(255),
+            api_key varchar(255)
+        );
+    """
+
+    try:
+        cursor.execute(sql)
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+def update_user_details(id, api_key, phone_number):
+    sql = """
+        INSERT INTO "Users" (id, api_key, phone_number)
+        VALUES (%s, %s, %s);
+    """
+
+    try:
+        cursor.execute(sql, (id, api_key, phone_number))
+        cursor.commit()
+    except Exception as e:
+        print(e)
+
 def create_event_table():
     sql = """ CREATE TABLE IF NOT EXISTS public."Event" (
     power character varying(10) NOT NULL,
