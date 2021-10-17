@@ -1,17 +1,14 @@
 import requests
-import os
 
-token = os.getenv('LIFX_KEY')
+def start_sunrise(api_token):
+    headers = {
+        "Authorization": "Bearer %s" % api_token,
+    }
 
-headers = {
-    "Authorization": "Bearer %s" % token,
-}
-
-def start_sunrise():
     # 2000k -> 4500k
-    minutes = 10
-    set_colour("1500", 0.0, 0.0)
-    set_colour("4500", 0.6, minutes*60.0)
+    minutes = 5
+    set_colour("1500", 0.0, 0.0, headers)
+    set_colour("4500", 0.6, minutes*60.0, headers)
     
 def disco():
     for i in range(10):
@@ -21,7 +18,7 @@ def disco():
         set_colour("5000", 1.0, 0.03)
 
 
-def set_colour(kelvin, brightness, duration):
+def set_colour(kelvin, brightness, duration, headers):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
@@ -33,7 +30,7 @@ def set_colour(kelvin, brightness, duration):
 
     print(response)
 
-def set_colour_off(kelvin):
+def set_colour_off(kelvin, headers):
     payload = { 
         "power": "on",
         "color": "kelvin:" + kelvin + " saturation:1",
@@ -46,7 +43,7 @@ def set_colour_off(kelvin):
     print(response)
 
 
-def fade_colour(delta_kelvin, delta_brightness, duration):
+def fade_colour(delta_kelvin, delta_brightness, duration, headers):
     payload = { 
         "power": "on",
         "duration": duration,

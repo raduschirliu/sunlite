@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 import os
 import psycopg2
 
@@ -69,7 +69,7 @@ def create_event_table():
     sql = """ CREATE TABLE IF NOT EXISTS public."Event" (
     id SERIAL NOT NULL PRIMARY KEY,
     scheduled_at timestamp without time zone NOT NULL,
-    api_token character varying(250) NOT NULL
+    api_key character varying(250) NOT NULL
     ) """
     
     try:
@@ -82,18 +82,22 @@ def create_event_table():
         return str(error)
 
 # returns an array of the events from the DB!
-def get_events():
+def get_events_api_key():
     DATABASE_URL = os.getenv("DATABASE_URL")
 
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
 
-    sql = """SELECT * FROM public.'Event'"""
+    sql = """SELECT id, api_key FROM public."Event" WHERE scheduled_at < NOW() - INTERVAL '15 minutes'"""
+    # val = (datetime.datetime.now() - datetime.timedelta(minutes=30))
+
     cursor.execute(sql)
+
+    results = cursor.fetchall()
 
     conn.close()
 
-    return cursor.fetchall()
+    return results
 
 def post_event(scheduled_at, api_key):
     try:

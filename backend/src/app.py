@@ -3,11 +3,11 @@ from datetime import datetime
 import psycopg2
 import json
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from twilio.twiml.messaging_response import MessagingResponse
 
-from .lifx_accessor import start_sunrise, disco
+from .lifx_accessor import disco
 from .auth import verify_jwt
 
 # Load dotenv files
